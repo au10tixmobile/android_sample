@@ -10,3 +10,6 @@ Acquire the JWT token and modify Au10NetworkHelper.java to correctly include the
 public class Au10NetworkHelper {
     public static final String JWT_for_Bearer = "xxx.xxx.xxx";
 ```
+
+## Artifactory password
+To get the artifacts you will need to contact support for artifactory's password and update the project's build.gradle.
