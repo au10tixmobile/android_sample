@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/lobbyFragment">
+
+    <fragment
+        android:id="@+id/lobbyFragment"
+        android:name="com.au10tix.sampleapp.views.fragments.SampleLobbyFragment"
+        android:label="fragment_lobby">
+        <action
+            android:id="@+id/start_au10Fragment"
+            app:destination="@id/au10Fragment"
+            app:popUpTo="@id/lobbyFragment" />
+        <action
+            android:id="@+id/action_lobbyFragment_to_faceLivenessFragment"
+            app:destination="@id/faceLivenessFragment" />
+        <argument
+            android:name="auto"
+            android:defaultValue="true"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_lobbyFragment_to_smartDocumentFragment"
+            app:destination="@id/smartDocumentFragment"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/lobbyFragment" />
+        <action
+            android:id="@+id/action_lobby_to_POA"
+            app:destination="@id/poaFeatureFragment"
+            app:popUpTo="@id/lobbyFragment" />
+        <action
+            android:id="@+id/action_lobby_to_Backend"
+            app:destination="@id/sampleBackendSendFragment"
+            app:popUpTo="@id/lobbyFragment" />
+        <action
+            android:id="@+id/action_lobby_to_afl"
+            app:destination="@id/aflFragment"
+            app:popUpTo="@id/lobbyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/faceLivenessFragment"
+        android:name="com.au10tix.sampleapp.views.fragments.SampleFaceLivenessFragment"
+        android:label="FaceLivenessFragment" />
+    <fragment
+        android:id="@+id/smartDocumentFragment"
+        android:name="com.au10tix.sampleapp.views.fragments.SampleSmartDocumentFragment"
+        android:label="SmartDocumentFragment"
+        app:argType="Boolean" />
+    <fragment
+        android:id="@+id/poaFeatureFragment"
+        android:name="com.au10tix.sampleapp.views.fragments.SamplePoaFeatureFragment"
+        android:label="PoaFeatureFragment" />
+    <fragment
+        android:id="@+id/au10Fragment"
+        android:name="com.au10tix.sdk.ui.Au10Fragment"
+        android:label="Au10Fragment" />
+    <fragment
+        android:id="@+id/sampleBackendSendFragment"
+        android:name="com.au10tix.sampleapp.views.fragments.SampleBackendSendFragment"
+        android:label="SampleBackendSendFragment" />
+    <fragment
+        android:id="@+id/aflFragment"
+        android:name="com.au10tix.sampleapp.views.fragments.SampleActiveFaceLivenessFragment"
+        android:label="Active Face Liveness" />
+</navigation>

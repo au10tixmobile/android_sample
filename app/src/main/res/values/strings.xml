@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Implementation Sample App</string>
+    <string name="dot_color">#00d1fe</string>
+    <string name="spinner_title">environment</string>
+
+    <string-array name="backend">
+        <item>ID verification</item>
+        <item>Proof of Address</item>
+    </string-array>
+
+    <string-array name="features">
+        <item>Active Face Liveness</item>
+        <item>Passive Face Liveness</item>
+        <item>Smart Document Capture</item>
+        <item>Proof of Address</item>
+        <item>SDC UI</item>
+        <item>PFL UI</item>
+        <item>POA UI</item>
+    </string-array>
+</resources>
