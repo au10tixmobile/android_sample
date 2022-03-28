@@ -18,7 +18,6 @@ import com.au10tix.sampleapp.models.DataViewModel
 import com.au10tix.sdk.protocol.FeatureSessionResult
 import com.au10tix.smartDocument.SmartDocumentResult
 import kotlinx.android.synthetic.main.feature_result_dialog.*
-import java.util.*
 
 abstract class BaseFragment : Fragment() {
     lateinit var viewModel: DataViewModel
@@ -50,7 +49,7 @@ abstract class BaseFragment : Fragment() {
                 missingPermissions.add(requiredPermission)
             }
         }
-        if (!missingPermissions.isEmpty()) {
+        if (missingPermissions.isNotEmpty()) {
             val missingPermissionArray = missingPermissions.toTypedArray()
             requestPermissions(missingPermissionArray, PERMISSIONS_RQ)
             return false
@@ -105,38 +104,35 @@ abstract class BaseFragment : Fragment() {
         if (alertDialog != null && alertDialog!!.isShowing) {
             return
         }
-        var details: String = ""
+        var details = ""
         lateinit var bitmap: Bitmap
         when (result) {
             is FaceLivenessResult -> {
-                val faceLivenessResult = result
                 details = """
-                 Probability: ${faceLivenessResult.probability}
-                 Quality: ${faceLivenessResult.quality}
-                 Score: ${faceLivenessResult.score}
+                 Probability: ${result.probability}
+                 Quality: ${result.quality}
+                 Score: ${result.score}
                  """.trimIndent()
                 bitmap = viewModel.pflResult.value!!.imageRepresentation.bitmap
             }
             is SmartDocumentResult -> {
-                val documentResult = result
-                details = "ID status: ${documentResult.idStatus}"
-                bitmap = documentResult.imageRepresentation.bitmap
+                details = "ID status: ${result.idStatus}"
+                bitmap = result.imageRepresentation.bitmap
             }
             is PoaResult -> {
-                val documentResult = result
-                bitmap = documentResult.imageRepresentation.bitmap
+                bitmap = result.imageRepresentation.bitmap
             }
         }
 
         val inflater = layoutInflater
-        val dialoglayout: View = inflater.inflate(R.layout.feature_result_dialog, null).apply {
+        val dialogLayout: View = inflater.inflate(R.layout.feature_result_dialog, null).apply {
             image.setImageBitmap(bitmap)
         }
         alertDialog =
             AlertDialog.Builder(requireContext())
                 .setMessage(details)
-                .setView(dialoglayout)
-                .setPositiveButton("OK") { dialogInterface, i -> dialogInterface.dismiss() }
+                .setView(dialogLayout)
+                .setPositiveButton("OK") { dialogInterface, _ -> dialogInterface.dismiss() }
                 .show()
     }
 

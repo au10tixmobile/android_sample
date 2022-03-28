@@ -24,7 +24,7 @@ class SamplePoaFeatureFragment : BaseFragment() {
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION)
     private lateinit var poaFeatureManager: PoaFeatureManager
-    protected lateinit var coreManager: Au10xCore
+    private lateinit var coreManager: Au10xCore
 
     override fun onCreateView(
         inflater: LayoutInflater,

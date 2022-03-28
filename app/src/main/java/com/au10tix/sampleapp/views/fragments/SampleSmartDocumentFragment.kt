@@ -89,6 +89,6 @@ class SampleSmartDocumentFragment : BaseFragment() {
     }
 
     companion object {
-        protected const val TITLE_KEY = "title"
+        private const val TITLE_KEY = "title"
     }
 }

@@ -186,7 +186,7 @@ class SampleLobbyFragment : BaseFragment() {
         })
         //The UI provided along the SDK can be styled as follows:
         au10UIManager = builder.build()
-        val fragment: Fragment? = au10UIManager.fragment
+        val fragment: Fragment? = au10UIManager.generateFragment()
         if (fragment != null) {
             NavHostFragment.findNavController(this)
                 .navigate(R.id.start_au10Fragment, fragment.arguments)

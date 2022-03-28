@@ -1,9 +1,7 @@
 package com.au10tix.sampleapp.views.fragments
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.media.projection.MediaProjectionManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -132,6 +130,9 @@ class SampleActiveFaceLivenessFragment : BaseFragment() {
             }
             AFLConsts.RECORDING_STARTED -> {
                 // session recording started
+            }
+            AFLConsts.RECORDING_ENDED -> {
+                // session recording ended
             }
             AFLConsts.SELFIE_CAPTURED -> {
                 // pfl image captured

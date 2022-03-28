@@ -25,7 +25,8 @@ import com.au10tix.sdk.protocol.FeatureSessionError
 import com.au10tix.sdk.protocol.FeatureSessionResult
 import kotlinx.android.synthetic.main.fragment_passive_face_liveness.*
 import java.io.File
-
+import kotlin.math.max
+import kotlin.math.min
 
 class SampleFaceLivenessFragment : BaseFragment() {
     override val requiredPermissions: Array<String?> = arrayOf(
@@ -56,13 +57,13 @@ class SampleFaceLivenessFragment : BaseFragment() {
         overlay.setFacing(CameraSelector.LENS_FACING_FRONT)
         (view.findViewById<View>(R.id.title) as TextView).text =
             requireArguments().getString(TITLE_KEY)
-        capture.setOnClickListener { v: View? -> coreManager.captureStillImage() }
+        capture.setOnClickListener { coreManager.captureStillImage() }
         coreManager = Au10xCore.getInstance(requireContext().applicationContext)
-        recapture.setOnClickListener { v: View? ->
+        recapture.setOnClickListener {
             hidePreview()
             retry()
         }
-        validate.setOnClickListener { v: View? ->
+        validate.setOnClickListener {
             showProgressDialog(true, "Validating")
 
             faceLiveness.validateLiveness(
@@ -71,10 +72,12 @@ class SampleFaceLivenessFragment : BaseFragment() {
                     override fun onSuccess(result: FaceLivenessResult) {
                         showProgressDialog(false, "Validating")
                         //Handle the result parameters according to your business logic.
-                        details.text = String.format("Probability: %s\nQuality: %s\nScore: %s",
+                        details.text = String.format(
+                            "Probability: %s\nQuality: %s\nScore: %s",
                             result.probability,
                             result.quality,
-                            result.score)
+                            result.score
+                        )
                         viewModel.setFaceLivenessResult(result)
                         NavHostFragment.findNavController(this@SampleFaceLivenessFragment)
                             .navigateUp()
@@ -149,8 +152,8 @@ class SampleFaceLivenessFragment : BaseFragment() {
                 val bitmap = sessionResult.frameData.bitmap
                 preview.setImageBitmap(bitmap)
                 viewModel.setFaceLivenessResult(sessionResult as FaceLivenessResult)
-                val min = Math.min(bitmap.width, bitmap.height)
-                val max = Math.max(bitmap.width, bitmap.height)
+                val min = min(bitmap.width, bitmap.height)
+                val max = max(bitmap.width, bitmap.height)
                 overlay.setCameraInfo(min, max)
                 //The quad object under frame data represents the face's borders, signifying its location
                 val quad = sessionResult.frameData.quad
@@ -217,8 +220,8 @@ class SampleFaceLivenessFragment : BaseFragment() {
                                     actualHeight = bitmapHeight * imageViewWidth / bitmapWidth
                                     actualWidth = imageViewWidth
                                 }
-                                val min = Math.min(bitmap.width, bitmap.height)
-                                val max = Math.max(bitmap.width, bitmap.height)
+                                val min = min(bitmap.width, bitmap.height)
+                                val max = max(bitmap.width, bitmap.height)
                                 if (actualWidth < actualHeight) {
                                     overlay.setCameraInfo(min, max)
                                 } else {
@@ -238,6 +241,6 @@ class SampleFaceLivenessFragment : BaseFragment() {
     }
 
     companion object {
-        protected const val TITLE_KEY = "title"
+        private const val TITLE_KEY = "title"
     }
 }
