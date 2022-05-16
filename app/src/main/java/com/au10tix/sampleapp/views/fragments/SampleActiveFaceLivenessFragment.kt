@@ -148,7 +148,6 @@ class SampleActiveFaceLivenessFragment : BaseFragment() {
                 // user interrupted to the session. should call AFLFeatureManager.canStartSession()
                 // before starting the session again to be sure the user have more tries
                 instructions.text = "Session interrupted"
-                instructions.postDelayed({ startCore() }, 1500)
             }
             AFLConsts.WAITING_FOR_PFL -> {
                 // The session is waiting for pfl validation. result callback will be called when done.
