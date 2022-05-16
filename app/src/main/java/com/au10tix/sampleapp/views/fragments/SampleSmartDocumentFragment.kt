@@ -5,11 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.navigation.fragment.NavHostFragment
 import com.au10tix.sampleapp.R
+import com.au10tix.sampleapp.views.ui.OverlayView
 import com.au10tix.sdk.core.Au10xCore
 import com.au10tix.sdk.core.comm.SessionCallback
 import com.au10tix.sdk.protocol.Au10Update
@@ -18,7 +21,6 @@ import com.au10tix.sdk.protocol.FeatureSessionResult
 import com.au10tix.smartDocument.SmartDocumentFeatureManager
 import com.au10tix.smartDocument.SmartDocumentFeatureSessionFrame
 import com.au10tix.smartDocument.SmartDocumentResult
-import kotlinx.android.synthetic.main.fragment_open_camera.*
 import java.io.File
 
 class SampleSmartDocumentFragment : BaseFragment() {
@@ -27,6 +29,8 @@ class SampleSmartDocumentFragment : BaseFragment() {
         Manifest.permission.ACCESS_COARSE_LOCATION)
     private lateinit var coreManager: Au10xCore
     private lateinit var smartDocumentFeatureManager: SmartDocumentFeatureManager
+    private lateinit var passableViewGroup: FrameLayout
+    private lateinit var details: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +43,11 @@ class SampleSmartDocumentFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         coreManager = Au10xCore.getInstance(requireContext().applicationContext)
         val title = requireArguments().getString(TITLE_KEY)
-        overlay.setFacing(CameraSelector.LENS_FACING_BACK)
+        passableViewGroup = view.findViewById(R.id.passable_view_group)
+        details = view.findViewById(R.id.details)
+        view.findViewById<OverlayView>(R.id.overlay).setFacing(CameraSelector.LENS_FACING_BACK)
         (view.findViewById<View>(R.id.title) as TextView).text = title
-        capture.setOnClickListener { v: View ->
+        view.findViewById<Button>(R.id.capture).setOnClickListener { v: View ->
             v.isEnabled = false
             coreManager.captureStillImage()
         }
@@ -55,7 +61,7 @@ class SampleSmartDocumentFragment : BaseFragment() {
     override fun startCore() {
         //Start the session by passing the feature manager, the view group, and a SessionCallback that will host the UI, to the prepared Au10xCore instance.
         coreManager.startSession(smartDocumentFeatureManager,
-            passable_view_group,
+            passableViewGroup,
             object : SessionCallback {
                 override fun onSessionResult(sessionResult: FeatureSessionResult) {
                     //The session result contains the result image file, to be later forwarded to the back end.

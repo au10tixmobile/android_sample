@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.doOnLayout
 import androidx.navigation.fragment.findNavController
@@ -19,7 +21,6 @@ import com.au10tix.sdk.core.comm.SessionCallback
 import com.au10tix.sdk.protocol.Au10Update
 import com.au10tix.sdk.protocol.FeatureSessionError
 import com.au10tix.sdk.protocol.FeatureSessionResult
-import kotlinx.android.synthetic.main.fragment_afl.*
 
 class SampleActiveFaceLivenessFragment : BaseFragment() {
 
@@ -30,6 +31,8 @@ class SampleActiveFaceLivenessFragment : BaseFragment() {
     private lateinit var aflFeatureManager: ActiveFaceLivenessFeatureManager
     private lateinit var coreManager: Au10xCore
     private var prePermission = true
+    private lateinit var passableViewGroup: FrameLayout
+    private lateinit var instructions: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,16 +45,20 @@ class SampleActiveFaceLivenessFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        passable_view_group.doOnLayout {
+        passableViewGroup = view.findViewById(R.id.passable_view_group)
+        instructions = view.findViewById(R.id.instructions)
+        passableViewGroup.doOnLayout {
             coreManager = Au10xCore.getInstance(requireContext())
             aflFeatureManager = ActiveFaceLivenessFeatureManager(requireContext(), this)
             if (verifyPermissions()) {
-                startFeature()
+                view.post {
+                    startCore()
+                }
             }
         }
     }
 
-    private fun startFeature() {
+    override fun startCore() {
         val fa = aflFeatureManager.checkFeatureAvailability(requireContext())
         if (!fa.isAvailable) {
             Toast.makeText(requireContext(), "${fa.isRequiredFeaturesAvailable} ${fa.isRequiredPermissionsGranted}", Toast.LENGTH_SHORT).show()
@@ -61,7 +68,7 @@ class SampleActiveFaceLivenessFragment : BaseFragment() {
                 if (aflFeatureManager.canStartSession()) {
                     coreManager.startSession(
                         aflFeatureManager,
-                        passable_view_group,
+                        passableViewGroup,
                         object : SessionCallback {
                             override fun onSessionResult(result: FeatureSessionResult) {
                             }
@@ -141,7 +148,6 @@ class SampleActiveFaceLivenessFragment : BaseFragment() {
                 // user interrupted to the session. should call AFLFeatureManager.canStartSession()
                 // before starting the session again to be sure the user have more tries
                 instructions.text = "Session interrupted"
-                instructions.postDelayed({ startFeature() }, 1500)
             }
             AFLConsts.WAITING_FOR_PFL -> {
                 // The session is waiting for pfl validation. result callback will be called when done.
@@ -189,7 +195,7 @@ class SampleActiveFaceLivenessFragment : BaseFragment() {
         if (requestCode == MEDIA_PROJECTION_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 prePermission = false
-                startFeature()
+                startCore()
             } else {
                 instructions.text = "Permission denied. Cannot start session"
             }

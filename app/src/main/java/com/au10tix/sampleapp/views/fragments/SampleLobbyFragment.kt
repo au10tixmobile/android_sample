@@ -5,6 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -27,11 +30,13 @@ import com.au10tix.sdk.ui.Au10UIManager
 import com.au10tix.sdk.ui.UICallback
 import com.au10tix.smartDocument.SmartDocumentFeatureManager
 import com.au10tix.smartDocument.SmartDocumentResult
-import kotlinx.android.synthetic.main.fragment_lobby_sample.*
 
 class SampleLobbyFragment : BaseFragment() {
 
     private lateinit var au10UIManager: Au10UIManager
+    private lateinit var idFrontIV: ImageView
+    private lateinit var facePhotoIV: ImageView
+    private lateinit var poaIV: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,10 +90,14 @@ class SampleLobbyFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        startFeatureEvaluationButton.setOnClickListener {
+        idFrontIV = view.findViewById(R.id.id_front_iv)
+        facePhotoIV = view.findViewById(R.id.face_photo_iv)
+        poaIV = view.findViewById(R.id.poa_iv)
+
+        view.findViewById<Button>(R.id.startFeatureEvaluationButton).setOnClickListener {
             val bundle = Bundle()
 
-            when (resources.getStringArray(R.array.features)[featuresSpinner.selectedItemPosition]) {
+            when (resources.getStringArray(R.array.features)[view.findViewById<Spinner>(R.id.featuresSpinner).selectedItemPosition]) {
                 "Passive Face Liveness" -> NavHostFragment.findNavController(this)
                     .navigate(R.id.action_lobbyFragment_to_faceLivenessFragment, bundle)
                 "Smart Document Capture" -> NavHostFragment.findNavController(this)
@@ -111,14 +120,14 @@ class SampleLobbyFragment : BaseFragment() {
             }
         }
 
-        backend.setOnClickListener {
+        view.findViewById<Button>(R.id.backend).setOnClickListener {
             NavHostFragment.findNavController(this).navigate(R.id.action_lobby_to_Backend)
         }
 
         if (viewModel.sdcFrontResult.value != null) {
-            id_front_iv.setImageBitmap(viewModel.sdcFrontResult.value!!.imageRepresentation.bitmap)
+            idFrontIV.setImageBitmap(viewModel.sdcFrontResult.value!!.imageRepresentation.bitmap)
 
-            id_front_iv.setOnClickListener {
+            idFrontIV.setOnClickListener {
                 val result: FeatureSessionResult? = viewModel.sdcFrontResult.value
                 if (result != null) {
                     displayFeatureResultDialogBox(result)
@@ -127,9 +136,9 @@ class SampleLobbyFragment : BaseFragment() {
         }
 
         if (viewModel.pflResult.value != null) {
-            face_photo_iv.setImageBitmap(viewModel.pflResult.value!!.imageRepresentation.bitmap)
+            facePhotoIV.setImageBitmap(viewModel.pflResult.value!!.imageRepresentation.bitmap)
 
-            face_photo_iv.setOnClickListener {
+            facePhotoIV.setOnClickListener {
                 val result: FeatureSessionResult? = viewModel.pflResult.value
                 if (result != null) {
                     displayFeatureResultDialogBox(result)
@@ -137,9 +146,9 @@ class SampleLobbyFragment : BaseFragment() {
             }
         }
         if (viewModel.poaResult.value != null) {
-            poa_iv.setImageBitmap(viewModel.poaResult.value!!.imageRepresentation.bitmap)
+            poaIV.setImageBitmap(viewModel.poaResult.value!!.imageRepresentation.bitmap)
 
-            poa_iv.setOnClickListener {
+            poaIV.setOnClickListener {
                 val result: FeatureSessionResult? = viewModel.poaResult.value
                 if (result != null) {
                     displayFeatureResultDialogBox(result)

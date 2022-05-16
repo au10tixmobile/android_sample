@@ -8,6 +8,8 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Process
 import android.view.View
+import android.widget.ImageView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,13 +19,25 @@ import com.au10tix.sampleapp.R
 import com.au10tix.sampleapp.models.DataViewModel
 import com.au10tix.sdk.protocol.FeatureSessionResult
 import com.au10tix.smartDocument.SmartDocumentResult
-import kotlinx.android.synthetic.main.feature_result_dialog.*
 
 abstract class BaseFragment : Fragment() {
     lateinit var viewModel: DataViewModel
 
     protected var pDialog: ProgressDialog? = null
     private var alertDialog: AlertDialog? = null
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            for (key: String in permissions.keys) {
+                if (!permissions[key]!!) {
+                    verifyPermissions()
+                    return@registerForActivityResult
+                }
+            }
+            startCore()
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,7 +65,7 @@ abstract class BaseFragment : Fragment() {
         }
         if (missingPermissions.isNotEmpty()) {
             val missingPermissionArray = missingPermissions.toTypedArray()
-            requestPermissions(missingPermissionArray, PERMISSIONS_RQ)
+            requestPermissionLauncher.launch(missingPermissionArray)
             return false
         }
         return true
@@ -61,23 +75,6 @@ abstract class BaseFragment : Fragment() {
         val locationPermissionState =
             context.checkPermission(permission!!, Process.myPid(), Process.myUid())
         return locationPermissionState == PackageManager.PERMISSION_GRANTED
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray,
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSIONS_RQ) {
-            for (permissionGrantState in grantResults) {
-                if (permissionGrantState == PackageManager.PERMISSION_DENIED) {
-                    verifyPermissions()
-                    return
-                }
-            }
-            startCore()
-        }
     }
 
     protected fun showProgressDialog(shouldShow: Boolean, message: String) {
@@ -126,7 +123,7 @@ abstract class BaseFragment : Fragment() {
 
         val inflater = layoutInflater
         val dialogLayout: View = inflater.inflate(R.layout.feature_result_dialog, null).apply {
-            image.setImageBitmap(bitmap)
+            findViewById<ImageView>(R.id.image).setImageBitmap(bitmap)
         }
         alertDialog =
             AlertDialog.Builder(requireContext())

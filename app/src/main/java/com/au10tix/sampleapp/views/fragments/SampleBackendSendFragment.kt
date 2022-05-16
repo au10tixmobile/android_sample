@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.au10tix.backend.Au10Backend
@@ -12,7 +13,6 @@ import com.au10tix.backend.BackendCallback
 import com.au10tix.backend.PersonalDetails
 import com.au10tix.sampleapp.R
 import com.au10tix.sdk.core.Au10xCore
-import kotlinx.android.synthetic.main.fragment_backend_sender.*
 
 class SampleBackendSendFragment : BaseFragment() {
 
@@ -45,11 +45,11 @@ class SampleBackendSendFragment : BaseFragment() {
                 return@setOnClickListener
             }
             description.text = "sending data"
-            when (resources.getStringArray(R.array.backend)[backendTypeSpinner.selectedItemPosition]) {
+            val spinner = view.findViewById<Spinner>(R.id.backendTypeSpinner)
+            when (resources.getStringArray(R.array.backend)[spinner.selectedItemPosition]) {
                 "ID verification" -> performIDV()
                 "Proof of Address" -> performPOA()
             }
-
         }
     }
 

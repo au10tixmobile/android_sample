@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
@@ -18,12 +20,12 @@ import com.au10tix.faceliveness.FaceLivenessUpdate
 import com.au10tix.faceliveness.LivenessCallback
 import com.au10tix.sampleapp.R
 import com.au10tix.sampleapp.models.DataViewModel
+import com.au10tix.sampleapp.views.ui.OverlayView
 import com.au10tix.sdk.core.Au10xCore
 import com.au10tix.sdk.core.comm.SessionCallback
 import com.au10tix.sdk.protocol.Au10Update
 import com.au10tix.sdk.protocol.FeatureSessionError
 import com.au10tix.sdk.protocol.FeatureSessionResult
-import kotlinx.android.synthetic.main.fragment_passive_face_liveness.*
 import java.io.File
 import kotlin.math.max
 import kotlin.math.min
@@ -37,6 +39,14 @@ class SampleFaceLivenessFragment : BaseFragment() {
     private var previewParentView: FrameLayout? = null
     private lateinit var coreManager: Au10xCore
     private lateinit var faceLiveness: FaceLivenessFeatureManager
+    private lateinit var details: TextView
+    private lateinit var preview: ImageView
+    private lateinit var capture: Button
+    private lateinit var recapture: Button
+    private lateinit var validate: Button
+    private lateinit var overlay: OverlayView
+    private lateinit var title: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
@@ -52,11 +62,18 @@ class SampleFaceLivenessFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        details = view.findViewById(R.id.details)
+        preview = view.findViewById(R.id.preview)
+        capture = view.findViewById(R.id.capture)
+        recapture = view.findViewById(R.id.recapture)
+        validate = view.findViewById(R.id.validate)
+        overlay = view.findViewById(R.id.overlay)
+        title = view.findViewById(R.id.title)
+
         viewModel = ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
         previewParentView = view.findViewById(R.id.passable_view_group)
         overlay.setFacing(CameraSelector.LENS_FACING_FRONT)
-        (view.findViewById<View>(R.id.title) as TextView).text =
-            requireArguments().getString(TITLE_KEY)
+        title.text = requireArguments().getString(TITLE_KEY)
         capture.setOnClickListener { coreManager.captureStillImage() }
         coreManager = Au10xCore.getInstance(requireContext().applicationContext)
         recapture.setOnClickListener {
