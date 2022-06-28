@@ -1,4 +1,4 @@
-# Au10tix SDK Implementation Example - Android 
+# Au10tix SDK Implementation Example - Android
 
 ## Table of Contents
 - [Overview](#overview)
