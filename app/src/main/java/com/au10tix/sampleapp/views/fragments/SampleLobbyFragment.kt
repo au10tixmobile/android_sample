@@ -40,7 +40,7 @@ class SampleLobbyFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (ViewModelProvider(requireActivity()).get(DataViewModel::class.java).jwtToken.value.isNullOrEmpty()) {
+        if (ViewModelProvider(requireActivity())[DataViewModel::class.java].jwtToken.value.isNullOrEmpty()) {
 
             showProgressDialog(true, "Preparing Au10xCore")
             //Retrieve a jwt bearer token by sending the session's scope (Usually this is "mobilesdk pfl sdc") to the designated endpoint

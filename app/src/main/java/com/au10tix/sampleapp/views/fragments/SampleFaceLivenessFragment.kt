@@ -70,7 +70,7 @@ class SampleFaceLivenessFragment : BaseFragment() {
         overlay = view.findViewById(R.id.overlay)
         title = view.findViewById(R.id.title)
 
-        viewModel = ViewModelProvider(requireActivity()).get(DataViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[DataViewModel::class.java]
         previewParentView = view.findViewById(R.id.passable_view_group)
         overlay.setFacing(CameraSelector.LENS_FACING_FRONT)
         title.text = requireArguments().getString(TITLE_KEY)

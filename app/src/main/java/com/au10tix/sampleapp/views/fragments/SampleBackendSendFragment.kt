@@ -13,6 +13,7 @@ import com.au10tix.backend.BackendCallback
 import com.au10tix.backend.PersonalDetails
 import com.au10tix.sampleapp.R
 import com.au10tix.sdk.core.Au10xCore
+import com.au10tix.sdk.protocol.FeatureSessionError
 
 class SampleBackendSendFragment : BaseFragment() {
 
@@ -22,15 +23,14 @@ class SampleBackendSendFragment : BaseFragment() {
             description.text = "Request id:\n$requestID"
         }
 
-        override fun onError(error: String?) {
-            description.text = "sending data encountered error:\n$error"
+        override fun onError(error: FeatureSessionError?) {
+            description.text = "sending data encountered error:\n${error?.description}"
+
         }
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_backend_sender, container, false)
     }
@@ -40,7 +40,7 @@ class SampleBackendSendFragment : BaseFragment() {
 
         description = view.findViewById(R.id.description)
         view.findViewById<Button>(R.id.send).setOnClickListener {
-            if(!Au10xCore.isPrepared()) {
+            if (!Au10xCore.isPrepared()) {
                 Toast.makeText(context, "SDK not prepared", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }

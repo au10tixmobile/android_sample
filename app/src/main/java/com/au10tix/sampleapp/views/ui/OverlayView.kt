@@ -10,8 +10,8 @@ import android.graphics.drawable.shapes.Shape
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.camera.core.CameraSelector
+import com.au10tix.faceliveness.detector.face.Au10Face
 import com.au10tix.sdk.protocol.Quad
-import com.au10tix.selfie.detector.face.Au10Face
 
 class OverlayView : FrameLayout {
     private var faces: List<Au10Face>? = null
