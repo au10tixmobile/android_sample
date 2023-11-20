@@ -15,10 +15,6 @@
         <action
             android:id="@+id/action_lobbyFragment_to_faceLivenessFragment"
             app:destination="@id/faceLivenessFragment" />
-        <argument
-            android:name="auto"
-            android:defaultValue="true"
-            app:argType="boolean" />
         <action
             android:id="@+id/action_lobbyFragment_to_smartDocumentFragment"
             app:destination="@id/smartDocumentFragment"
@@ -31,10 +27,6 @@
         <action
             android:id="@+id/action_lobby_to_Backend"
             app:destination="@id/sampleBackendSendFragment"
-            app:popUpTo="@id/lobbyFragment" />
-        <action
-            android:id="@+id/action_lobby_to_afl"
-            app:destination="@id/aflFragment"
             app:popUpTo="@id/lobbyFragment" />
     </fragment>
     <fragment
@@ -58,8 +50,4 @@
         android:id="@+id/sampleBackendSendFragment"
         android:name="com.au10tix.sampleapp.views.fragments.SampleBackendSendFragment"
         android:label="SampleBackendSendFragment" />
-    <fragment
-        android:id="@+id/aflFragment"
-        android:name="com.au10tix.sampleapp.views.fragments.SampleActiveFaceLivenessFragment"
-        android:label="Active Face Liveness" />
 </navigation>

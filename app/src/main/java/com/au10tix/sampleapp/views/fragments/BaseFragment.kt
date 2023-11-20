@@ -57,10 +57,10 @@ abstract class BaseFragment : Fragment() {
     protected open fun startCore() {}
 
     protected fun verifyPermissions(): Boolean {
-        val missingPermissions = ArrayList<String?>()
+        val missingPermissions = ArrayList<String>()
         for (requiredPermission in requiredPermissions) {
             if (!verifyPermissionGranted(requireContext(), requiredPermission)) {
-                missingPermissions.add(requiredPermission)
+                requiredPermission.let { missingPermissions.add(it!!) }
             }
         }
         if (missingPermissions.isNotEmpty()) {
@@ -79,7 +79,7 @@ abstract class BaseFragment : Fragment() {
 
     protected fun showProgressDialog(shouldShow: Boolean, message: String) {
         if (shouldShow) {
-            pDialog = ProgressDialog(context)
+            pDialog = ProgressDialog(context,0)
             pDialog!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
             pDialog!!.setMessage(message)
             pDialog!!.isIndeterminate = false
