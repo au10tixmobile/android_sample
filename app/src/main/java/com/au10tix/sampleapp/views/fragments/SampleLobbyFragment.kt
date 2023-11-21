@@ -14,7 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.au10tix.faceliveness.FaceLivenessFeatureManager
 import com.au10tix.faceliveness.FaceLivenessResult
-import com.au10tix.localinfer.utils.LocalSdcManager
+//import com.au10tix.localinfer.utils.LocalSdcManager
 import com.au10tix.poa.PoaFeatureManager
 import com.au10tix.poa.PoaResult
 import com.au10tix.sampleapp.R
@@ -72,12 +72,12 @@ class SampleLobbyFragment : BaseFragment() {
                                 Toast.makeText(context, "Session prepared", Toast.LENGTH_LONG)
                                     .show()
                                 //Uncomment for local SDC implementations
-                                LocalSdcManager.warmup(
-                                    requireContext()
-                                ) { warmedUpSuccessfully, err ->
-                                    LocalSdcManager.useLocally = warmedUpSuccessfully
+//                                LocalSdcManager.warmup(
+//                                    requireContext()
+//                                ) { warmedUpSuccessfully, err ->
+//                                    LocalSdcManager.useLocally = warmedUpSuccessfully
                                     showProgressDialog(false, "")
-                                }
+//                                }
                             }
                         }
                     )
