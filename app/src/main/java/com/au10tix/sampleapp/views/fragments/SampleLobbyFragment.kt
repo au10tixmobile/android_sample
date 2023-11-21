@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.au10tix.faceliveness.FaceLivenessFeatureManager
 import com.au10tix.faceliveness.FaceLivenessResult
+//import com.au10tix.localinfer.utils.LocalSdcManager
 import com.au10tix.poa.PoaFeatureManager
 import com.au10tix.poa.PoaResult
 import com.au10tix.sampleapp.R
@@ -33,10 +34,10 @@ import com.au10tix.smartDocument.SmartDocumentResult
 
 class SampleLobbyFragment : BaseFragment() {
 
-    private lateinit var au10UIManager: Au10UIManager
-    private lateinit var idFrontIV: ImageView
     private lateinit var facePhotoIV: ImageView
+    private lateinit var idFrontIV: ImageView
     private lateinit var poaIV: ImageView
+    private lateinit var au10UIManager: Au10UIManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +71,13 @@ class SampleLobbyFragment : BaseFragment() {
                                     sessionId
                                 Toast.makeText(context, "Session prepared", Toast.LENGTH_LONG)
                                     .show()
-                                showProgressDialog(false, "")
+                                //Uncomment for local SDC implementations
+//                                LocalSdcManager.warmup(
+//                                    requireContext()
+//                                ) { warmedUpSuccessfully, err ->
+//                                    LocalSdcManager.useLocally = warmedUpSuccessfully
+                                    showProgressDialog(false, "")
+//                                }
                             }
                         }
                     )
@@ -87,6 +94,13 @@ class SampleLobbyFragment : BaseFragment() {
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        return inflater.inflate(R.layout.fragment_lobby_sample, container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -100,23 +114,26 @@ class SampleLobbyFragment : BaseFragment() {
             when (resources.getStringArray(R.array.features)[view.findViewById<Spinner>(R.id.featuresSpinner).selectedItemPosition]) {
                 "Passive Face Liveness" -> NavHostFragment.findNavController(this)
                     .navigate(R.id.action_lobbyFragment_to_faceLivenessFragment, bundle)
+
                 "Smart Document Capture" -> NavHostFragment.findNavController(this)
                     .navigate(R.id.action_lobbyFragment_to_smartDocumentFragment, bundle)
+
                 "Proof of Address" -> NavHostFragment.findNavController(this)
                     .navigate(R.id.action_lobby_to_POA)
+
                 "SDC UI" -> {
                     val smartDocumentFeatureManager = SmartDocumentFeatureManager(context, this)
                     handleSdkUI(smartDocumentFeatureManager)
                 }
+
                 "PFL UI" -> {
                     val faceLivenessFeatureManager = FaceLivenessFeatureManager(context, this)
                     handleSdkUI(faceLivenessFeatureManager)
                 }
+
                 "POA UI" -> {
                     handleSdkUI(PoaFeatureManager(context, this))
                 }
-                "Active Face Liveness" -> NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_lobby_to_afl)
             }
         }
 
@@ -169,9 +186,11 @@ class SampleLobbyFragment : BaseFragment() {
                     is FaceLivenessResult -> {
                         viewModel.setFaceLivenessResult(sessionResult)
                     }
+
                     is SmartDocumentResult -> {
                         viewModel.setSmartDocumentResult(sessionResult)
                     }
+
                     is PoaResult -> {
                         viewModel.setProofOfAddressResult(sessionResult)
                     }
@@ -204,10 +223,4 @@ class SampleLobbyFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.fragment_lobby_sample, container, false)
-    }
 }

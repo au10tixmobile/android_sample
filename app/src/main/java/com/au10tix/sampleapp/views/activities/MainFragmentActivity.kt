@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import com.au10tix.sampleapp.R
 import com.au10tix.sampleapp.models.DataViewModel
+import com.au10tix.sdk.core.Au10xCore
 
 class MainFragmentActivity : AppCompatActivity() {
     private var viewModel: DataViewModel? = null
@@ -21,5 +22,6 @@ class MainFragmentActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         viewModel = null
+        Au10xCore.getInstance(this).destroy()
     }
 }

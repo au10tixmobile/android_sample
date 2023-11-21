@@ -47,11 +47,6 @@ class SampleFaceLivenessFragment : BaseFragment() {
     private lateinit var overlay: OverlayView
     private lateinit var title: TextView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        retainInstance = true
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -141,7 +136,7 @@ class SampleFaceLivenessFragment : BaseFragment() {
 
     private fun retry() {
         hidePreview()
-        if (faceLiveness.retry()) {
+        if (faceLiveness.canRetry()) {
             startCore()
         } else {
             Toast.makeText(context, "max retries", Toast.LENGTH_SHORT).show()
