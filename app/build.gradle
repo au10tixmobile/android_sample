@@ -36,7 +36,7 @@ ext {
     // Versions
     okHttpVersion = '4.5.0'
     navVersion = '2.5.3'
-    au10Version = '3.7.0'
+    au10Version = '3.7.2'
     camerax_version = '1.3.0-alpha02'
 }
 
@@ -75,8 +75,8 @@ dependencies {
     implementation "com.au10tix.sdk:smart-document:$au10Version"
     implementation "com.au10tix.sdk:backend:$au10Version"
     implementation "com.au10tix.sdk:au10tix:$au10Version"
-    //Local SDC dependency
-    implementation files('libs/local-infer.aar')
+    implementation "com.au10tix.sdk:local-infer:$au10Version"
+    // Networking
     implementation("com.squareup.okhttp3:okhttp:4.5.0")
 
 }
