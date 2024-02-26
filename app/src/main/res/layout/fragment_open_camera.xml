@@ -13,14 +13,6 @@
         app:layout_constraintDimensionRatio="W,4:3"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.au10tix.sampleapp.views.ui.OverlayView
-        android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="@id/passable_view_group"
-        app:layout_constraintBottom_toBottomOf="@id/passable_view_group"
-        android:background="#00000000" />
-
     <Button
         android:id="@+id/capture"
         android:layout_width="match_parent"

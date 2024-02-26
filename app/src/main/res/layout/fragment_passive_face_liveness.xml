@@ -16,11 +16,6 @@
         android:background="#000000"
         android:visibility="gone" />
 
-    <com.au10tix.sampleapp.views.ui.OverlayView
-        android:id="@+id/overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#00000000" />
 
     <Button
         android:id="@+id/capture"

@@ -19,6 +19,7 @@ import com.au10tix.poa.PoaFeatureManager
 import com.au10tix.poa.PoaResult
 import com.au10tix.sampleapp.R
 import com.au10tix.sampleapp.helpers.Au10NetworkHelper
+import com.au10tix.sampleapp.helpers.Au10NetworkHelper.JwtTokenReturner
 import com.au10tix.sampleapp.models.DataViewModel
 import com.au10tix.sdk.abstractions.FeatureManager
 import com.au10tix.sdk.commons.Au10Error
@@ -46,20 +47,21 @@ class SampleLobbyFragment : BaseFragment() {
             showProgressDialog(true, "Preparing Au10xCore")
             //Retrieve a jwt bearer token by sending the session's scope (Usually this is "mobilesdk pfl sdc") to the designated endpoint
 
-            Au10NetworkHelper.getBearerToken {
-                if (it == null) {
-                    Log.d("getBearerToken", "Token not acquired")
-                    return@getBearerToken
-                }
+            Au10NetworkHelper.getBearerToken { accessToken, sessionToken ->
                 try {
                     //To run detection sessions, first prepare Au10xCore by passing the jwt token and an onPrepare callback.
                     Au10xCore.prepare(
-                        context,
-                        it,
+                        requireContext(),
+                        accessToken,
+                        sessionToken,
                         object : OnPrepareCallback {
                             override fun onPrepareError(error: Au10Error) {
                                 Log.d("prepare", "onPrepareError")
-                                Toast.makeText(context, "Session prepare failed", Toast.LENGTH_LONG)
+                                Toast.makeText(
+                                    context,
+                                    "Session prepare failed",
+                                    Toast.LENGTH_LONG
+                                )
                                     .show()
                                 showProgressDialog(false, "")
                             }

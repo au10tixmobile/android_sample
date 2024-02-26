@@ -41,7 +41,6 @@ class SamplePoaFeatureFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         passableViewGroup = view.findViewById(R.id.passable_view_group)
-        view.findViewById<OverlayView>(R.id.overlay).setFacing(CameraSelector.LENS_FACING_BACK)
         view.findViewById<TextView>(R.id.title).text = "POA"
         view.findViewById<View>(R.id.capture).setOnClickListener { v: View ->
             v.isEnabled = false

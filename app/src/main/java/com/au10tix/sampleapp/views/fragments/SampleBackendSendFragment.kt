@@ -5,29 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
-import com.au10tix.backend.Au10Backend
-import com.au10tix.backend.BackendCallback
-import com.au10tix.backend.PersonalDetails
 import com.au10tix.sampleapp.R
+import com.au10tix.sdk.backend.Au10Backend
+import com.au10tix.sdk.backend.BackendCallback
 import com.au10tix.sdk.core.Au10xCore
 import com.au10tix.sdk.protocol.FeatureSessionError
 
 class SampleBackendSendFragment : BaseFragment() {
 
     private lateinit var description: TextView
-    private val callback = object : BackendCallback {
-        override fun onSuccess(requestID: String?) {
-            description.text = "Request id:\n$requestID"
-        }
-
-        override fun onError(error: FeatureSessionError?) {
-            description.text = "sending data encountered error:\n${error?.description}"
-
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -45,21 +33,16 @@ class SampleBackendSendFragment : BaseFragment() {
                 return@setOnClickListener
             }
             description.text = "sending data"
-            val spinner = view.findViewById<Spinner>(R.id.backendTypeSpinner)
-            when (resources.getStringArray(R.array.backend)[spinner.selectedItemPosition]) {
-                "ID verification" -> performIDV()
-                "Proof of Address" -> performPOA()
-            }
+            Au10Backend.sendRequest(object : BackendCallback {
+                override fun onSuccess(requestID: String?) {
+                    description.text = "Request id:\n$requestID"
+                }
+
+                override fun onError(error: FeatureSessionError?) {
+                    description.text = "sending data encountered error:\n${error?.description}"
+
+                }
+            })
         }
-    }
-
-    private fun performIDV() {
-        Au10Backend.sendIDVerification(callback)
-    }
-
-    private fun performPOA() {
-        //todo: Use real user data here
-        val personalDetails = PersonalDetails("firstName", "lastName", "address")
-        Au10Backend.sendProofOfAddress(personalDetails, callback)
     }
 }

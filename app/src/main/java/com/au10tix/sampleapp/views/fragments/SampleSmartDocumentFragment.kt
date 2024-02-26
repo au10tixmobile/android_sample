@@ -45,7 +45,6 @@ class SampleSmartDocumentFragment : BaseFragment() {
         val title = requireArguments().getString(TITLE_KEY)
         passableViewGroup = view.findViewById(R.id.passable_view_group)
         details = view.findViewById(R.id.details)
-        view.findViewById<OverlayView>(R.id.overlay).setFacing(CameraSelector.LENS_FACING_BACK)
         (view.findViewById<View>(R.id.title) as TextView).text = title
         view.findViewById<Button>(R.id.capture).setOnClickListener { v: View ->
             v.isEnabled = false

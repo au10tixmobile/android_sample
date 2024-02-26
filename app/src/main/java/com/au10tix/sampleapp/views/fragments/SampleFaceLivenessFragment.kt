@@ -1,7 +1,6 @@
 package com.au10tix.sampleapp.views.fragments
 
 import android.Manifest
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.camera.core.CameraSelector
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.au10tix.faceliveness.FaceLivenessFeatureManager
@@ -20,15 +18,12 @@ import com.au10tix.faceliveness.FaceLivenessUpdate
 import com.au10tix.faceliveness.LivenessCallback
 import com.au10tix.sampleapp.R
 import com.au10tix.sampleapp.models.DataViewModel
-import com.au10tix.sampleapp.views.ui.OverlayView
 import com.au10tix.sdk.core.Au10xCore
 import com.au10tix.sdk.core.comm.SessionCallback
 import com.au10tix.sdk.protocol.Au10Update
 import com.au10tix.sdk.protocol.FeatureSessionError
 import com.au10tix.sdk.protocol.FeatureSessionResult
 import java.io.File
-import kotlin.math.max
-import kotlin.math.min
 
 class SampleFaceLivenessFragment : BaseFragment() {
     override val requiredPermissions: Array<String?> = arrayOf(
@@ -44,7 +39,6 @@ class SampleFaceLivenessFragment : BaseFragment() {
     private lateinit var capture: Button
     private lateinit var recapture: Button
     private lateinit var validate: Button
-    private lateinit var overlay: OverlayView
     private lateinit var title: TextView
 
     override fun onCreateView(
@@ -62,12 +56,10 @@ class SampleFaceLivenessFragment : BaseFragment() {
         capture = view.findViewById(R.id.capture)
         recapture = view.findViewById(R.id.recapture)
         validate = view.findViewById(R.id.validate)
-        overlay = view.findViewById(R.id.overlay)
         title = view.findViewById(R.id.title)
 
         viewModel = ViewModelProvider(requireActivity())[DataViewModel::class.java]
         previewParentView = view.findViewById(R.id.passable_view_group)
-        overlay.setFacing(CameraSelector.LENS_FACING_FRONT)
         title.text = requireArguments().getString(TITLE_KEY)
         capture.setOnClickListener { coreManager.captureStillImage() }
         coreManager = Au10xCore.getInstance(requireContext().applicationContext)
@@ -148,7 +140,6 @@ class SampleFaceLivenessFragment : BaseFragment() {
         capture.visibility = View.VISIBLE
         recapture.visibility = View.GONE
         validate.visibility = View.GONE
-        overlay.setQuad(null)
     }
 
     override fun startCore() {
@@ -164,14 +155,8 @@ class SampleFaceLivenessFragment : BaseFragment() {
                 val bitmap = sessionResult.frameData.bitmap
                 preview.setImageBitmap(bitmap)
                 viewModel.setFaceLivenessResult(sessionResult as FaceLivenessResult)
-                val min = min(bitmap.width, bitmap.height)
-                val max = max(bitmap.width, bitmap.height)
-                overlay.setCameraInfo(min, max)
                 //The quad object under frame data represents the face's borders, signifying its location
                 val quad = sessionResult.frameData.quad
-                if (quad != null) {
-                    overlay.setQuad(quad)
-                }
             }
 
             override fun onSessionError(sessionError: FeatureSessionError) {
@@ -196,60 +181,6 @@ class SampleFaceLivenessFragment : BaseFragment() {
             faceLiveness.destroy()
         }
         previewParentView = null
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        if (preview != null && preview.visibility == View.VISIBLE) {
-            preview.addOnLayoutChangeListener(object : View.OnLayoutChangeListener {
-                override fun onLayoutChange(
-                    v: View,
-                    left: Int,
-                    top: Int,
-                    right: Int,
-                    bottom: Int,
-                    oldLeft: Int,
-                    oldTop: Int,
-                    oldRight: Int,
-                    oldBottom: Int,
-                ) {
-                    v.removeOnLayoutChangeListener(this)
-                    preview.post {
-                        if (viewModel != null) {
-                            val result = viewModel.pflResult.value
-                            if (result != null) {
-                                val bitmap = result.frameData.bitmap
-                                val actualHeight: Int
-                                val actualWidth: Int
-                                val imageViewHeight = preview.height
-                                val imageViewWidth = preview.width
-                                val bitmapHeight = bitmap.height
-                                val bitmapWidth = bitmap.width
-                                if (imageViewHeight * bitmapWidth <= imageViewWidth * bitmapHeight) {
-                                    actualWidth = bitmapWidth * imageViewHeight / bitmapHeight
-                                    actualHeight = imageViewHeight
-                                } else {
-                                    actualHeight = bitmapHeight * imageViewWidth / bitmapWidth
-                                    actualWidth = imageViewWidth
-                                }
-                                val min = min(bitmap.width, bitmap.height)
-                                val max = max(bitmap.width, bitmap.height)
-                                if (actualWidth < actualHeight) {
-                                    overlay.setCameraInfo(min, max)
-                                } else {
-                                    overlay.setCameraInfo(max, min)
-                                }
-                                val layoutParams = overlay.layoutParams
-                                layoutParams.width = actualWidth
-                                layoutParams.height = actualHeight
-                                overlay.layoutParams = layoutParams
-                                overlay.invalidate()
-                            }
-                        }
-                    }
-                }
-            })
-        }
     }
 
     companion object {
