@@ -23,6 +23,7 @@ import com.au10tix.sampleapp.helpers.Au10NetworkHelper.JwtTokenReturner
 import com.au10tix.sampleapp.models.DataViewModel
 import com.au10tix.sdk.abstractions.FeatureManager
 import com.au10tix.sdk.commons.Au10Error
+import com.au10tix.sdk.commons.SuspiciousConfig
 import com.au10tix.sdk.core.Au10xCore
 import com.au10tix.sdk.core.OnPrepareCallback
 import com.au10tix.sdk.protocol.Au10Update
@@ -42,6 +43,10 @@ class SampleLobbyFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val deviceRisk = Au10xCore.analyzePotentialRisks(requireContext())
+        deviceRisk.forEach { risk -> Log.d("sdk", "Risk found: $risk") }
+
         if (ViewModelProvider(requireActivity())[DataViewModel::class.java].jwtToken.value.isNullOrEmpty()) {
 
             showProgressDialog(true, "Preparing Au10xCore")
@@ -125,6 +130,7 @@ class SampleLobbyFragment : BaseFragment() {
 
                 "SDC UI" -> {
                     val smartDocumentFeatureManager = SmartDocumentFeatureManager(context, this)
+                    smartDocumentFeatureManager.suspiciousConfig = SuspiciousConfig()
                     handleSdkUI(smartDocumentFeatureManager)
                 }
 
@@ -189,12 +195,19 @@ class SampleLobbyFragment : BaseFragment() {
                         viewModel.setFaceLivenessResult(sessionResult)
                     }
 
-                    is SmartDocumentResult -> {
-                        viewModel.setSmartDocumentResult(sessionResult)
-                    }
-
                     is PoaResult -> {
                         viewModel.setProofOfAddressResult(sessionResult)
+                    }
+
+                    is SmartDocumentResult -> {
+                        if (sessionResult.suspicionReport != null && sessionResult.suspicionReport!!.isSuspicious()) {
+                            Toast.makeText(
+                                context,
+                                "Suspicious behavior detected",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                        viewModel.setSmartDocumentResult(sessionResult)
                     }
                 }
                 nav.navigateUp()
