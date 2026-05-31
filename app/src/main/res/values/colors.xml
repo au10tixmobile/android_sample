@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="au10tix_blue">#007AFF</color>
+    <color name="au10tix_blue_dark">#0055CC</color>
+    <color name="background_dark">#1C1C1E</color>
+    <color name="background_card">#2C2C2E</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#AEAEB2</color>
+    <color name="green_ready">#30D158</color>
+    <color name="yellow_warning">#FFD60A</color>
+    <color name="red_error">#FF453A</color>
+    <color name="separator">#3A3A3C</color>
 </resources>

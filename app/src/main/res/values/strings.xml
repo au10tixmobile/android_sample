@@ -1,14 +1,9 @@
 <resources>
-    <string name="app_name">Implementation Sample App</string>
-    <string name="dot_color">#00d1fe</string>
-    <string name="spinner_title">environment</string>
-
-    <string-array name="features">
-        <item>Smart Document Capture</item>
-        <item>Passive Face Liveness</item>
-        <item>Proof of Address</item>
-        <item>SDC UI</item>
-        <item>PFL UI</item>
-        <item>POA UI</item>
-    </string-array>
+    <string name="app_name">Au10tix Integration Sample</string>
+    <string name="initialize">Initialize</string>
+    <string name="begin_processing">Begin Processing</string>
+    <string name="workflow_token_hint">Paste workflow token here</string>
+    <string name="paste">Paste</string>
+    <string name="sdk_ready">SDK Ready</string>
+    <string name="sdk_not_initialized">Not Initialized</string>
 </resources>
