@@ -1,6 +1,6 @@
 # Au10tix Android Integration Sample
 
-A reference Android app demonstrating integration of the [Au10tix](https://www.au10tix.com) identity verification SDK (v4.7.0). It covers all major SDK features — Smart Document Capture, Passive Face Liveness, Proof of Address, NFC, Voice Consent, Video Session, and ID Thickness — with a configurable UI for each.
+A reference Android app demonstrating integration of the [Au10tix](https://www.au10tix.com) identity verification SDK (v4.7.1). It covers all major SDK features — Smart Document Capture, Passive Face Liveness, Proof of Address, NFC, Voice Consent, Video Session, and ID Thickness — with a configurable UI for each.
 
 ## Prerequisites
 
@@ -180,7 +180,3 @@ Behavior:
 
 Include all required Gradle dependencies (secure-me artifact plus one dependency per feature), manifest permissions, and Kotlin imports.
 ```
-
-## Removing Features
-
-See [FEATURE_MAPPING.md](FEATURE_MAPPING.md) for step-by-step instructions on removing individual features (code, dependencies, permissions) to produce a minimal integration.

@@ -47,6 +47,10 @@ android {
 }
 
 dependencies {
+    // Local AAR modules - get the AARs from Au10tix Support
+    implementation(files("libs/NFC-release.aar"))
+    implementation(files("libs/NFC-UI-release.aar"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -80,7 +84,6 @@ dependencies {
     implementation(libs.au10tix.face.liveness)
     implementation(libs.au10tix.smart.document)
     implementation(libs.au10tix.local.infer)
-    implementation(libs.au10tix.nfc)
     implementation(libs.au10tix.voice.consent)
     implementation(libs.au10tix.secure.me)
 
