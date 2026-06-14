@@ -50,11 +50,17 @@ dependencies {
     // Local AAR modules - get the AARs from Au10tix Support
     implementation(files("libs/NFC-release.aar"))
     implementation(files("libs/NFC-UI-release.aar"))
+    implementation(libs.jmrtd)
+    implementation(libs.scuba.sc.android)
+    implementation(libs.spongycastle.prov)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.lifecycle.extensions)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
@@ -71,6 +77,9 @@ dependencies {
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.lifecycle)
+
+    // Google Play Services base (required by core SDK)
+    implementation(libs.play.services.base)
 
     // ML Kit (required by face liveness and smart document SDKs)
     implementation(libs.play.services.mlkit.face.detection)

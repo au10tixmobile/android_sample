@@ -53,7 +53,6 @@ sealed class FeatureConfig {
     data class Vc(
         val text: String = "I consent to this identity verification process.",
         val maxSessionTime: Int = 20,
-        val showIntroScreen: Boolean = true,
         val showCloseButton: Boolean = true
     ) : FeatureConfig()
 
@@ -62,7 +61,6 @@ sealed class FeatureConfig {
         val vcTime: Int = 7,
         val idTime: Int = 5,
         val askUserConsent: Boolean = false,
-        val showIntroScreen: Boolean = true,
         val showCloseButton: Boolean = true
     ) : FeatureConfig()
 
@@ -72,7 +70,6 @@ sealed class FeatureConfig {
         val angleTime: Int = 8,
         val backTime: Int = 8,
         val askUserConsent: Boolean = false,
-        val showIntroScreen: Boolean = true,
         val showCloseButton: Boolean = true
     ) : FeatureConfig()
 

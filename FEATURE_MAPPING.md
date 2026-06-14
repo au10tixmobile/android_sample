@@ -18,11 +18,11 @@ SDK version: defined in `gradle/libs.versions.toml` → `au10tixSdk` (line 10)
 6. Remove import `SmartDocumentFeatureManager` from `FeatureActivity.kt` (line 35)
 7. Delete `FeatureType.SMART_DOCUMENT` branch from `when` in `FeatureActivity.kt` (lines 176–180)
 8. Remove from `app/build.gradle.kts`:
-   - `libs.au10tix.smart.document` (line 85) — **only if POA is also removed** (both share this artifact)
-   - `libs.au10tix.local.infer` (line 86) — **only if POA is also removed**
-   - ML Kit face detection (line 76) — **only if PFL is also removed**
-   - ML Kit text recognition (line 77)
-   - TFLite java/support (lines 78–79) — **only if PFL is also removed**
+   - `libs.au10tix.smart.document` (line 94) — **only if POA is also removed** (both share this artifact)
+   - `libs.au10tix.local.infer` (line 95) — **only if POA is also removed**
+   - ML Kit face detection (line 85) — **only if PFL is also removed**
+   - ML Kit text recognition (line 86)
+   - TFLite java/support (lines 87–88) — **only if PFL is also removed**
 9. Remove `android.permission.CAMERA` from `AndroidManifest.xml` — **only if PFL is also removed**
 10. Remove `android.hardware.camera` `<uses-feature>` from `AndroidManifest.xml` — **only if PFL is also removed**
 
@@ -39,9 +39,9 @@ SDK version: defined in `gradle/libs.versions.toml` → `au10tixSdk` (line 10)
 6. Remove import `FaceLivenessFeatureManager` from `FeatureActivity.kt` (line 15)
 7. Delete `FeatureType.PASSIVE_FACE_LIVENESS` branch from `when` in `FeatureActivity.kt` (lines 191–195)
 8. Remove from `app/build.gradle.kts`:
-   - `libs.au10tix.face.liveness` (line 84)
-   - ML Kit face detection (line 76)
-   - TFLite java/support (lines 78–79) — **only if SDC is also removed**
+   - `libs.au10tix.face.liveness` (line 93)
+   - ML Kit face detection (line 85)
+   - TFLite java/support (lines 87–88) — **only if SDC is also removed**
 9. Remove `android.permission.CAMERA` from `AndroidManifest.xml` — **only if SDC is also removed**
 10. Remove `android.hardware.camera` `<uses-feature>` from `AndroidManifest.xml` — **only if SDC is also removed**
 11. Remove `android.permission.RECORD_AUDIO` from `AndroidManifest.xml` — **only if VC and VS are also removed**
@@ -59,8 +59,8 @@ SDK version: defined in `gradle/libs.versions.toml` → `au10tixSdk` (line 10)
 6. Remove import `PoaFeatureManager` from `FeatureActivity.kt` (line 18)
 7. Delete `FeatureType.PROOF_OF_ADDRESS` branch from `when` in `FeatureActivity.kt` (lines 196–198)
 8. Remove from `app/build.gradle.kts`:
-   - `libs.au10tix.smart.document` (line 85) — **only if SDC is also removed** (PoaFeatureManager ships inside this artifact)
-   - `libs.au10tix.local.infer` (line 86) — **only if SDC is also removed**
+   - `libs.au10tix.smart.document` (line 94) — **only if SDC is also removed** (PoaFeatureManager ships inside this artifact)
+   - `libs.au10tix.local.infer` (line 95) — **only if SDC is also removed**
 
 ---
 
@@ -76,7 +76,7 @@ SDK version: defined in `gradle/libs.versions.toml` → `au10tixSdk` (line 10)
 7. Delete `FeatureType.NFC` branch from `when` in `FeatureActivity.kt` (lines 199–202)
 8. Remove extras `EXTRA_NFC_IS_ID`, `EXTRA_NFC_SHOW_INTRO` from `FeatureActivity.kt` companion (lines 56–57)
 9. Remove `is FeatureConfig.Nfc` branch from `when` in `MainActivity.kt`
-10. Remove local AAR references from `app/build.gradle.kts` (lines 50–52): `libs/NFC-release.aar` and `libs/NFC-UI-release.aar`
+10. Remove local AAR references and companion libraries from `app/build.gradle.kts` (lines 50–55): `libs/NFC-release.aar`, `libs/NFC-UI-release.aar`, `libs.jmrtd`, `libs.scuba.sc.android`, `libs.spongycastle.prov`
 11. Remove `android.permission.NFC` from `AndroidManifest.xml`
 
 ---
@@ -93,9 +93,9 @@ SDK version: defined in `gradle/libs.versions.toml` → `au10tixSdk` (line 10)
 5. Delete `VcConfigContent()` composable from `ui/screens/FeatureConfigSheet.kt` (lines 602–670)
 6. Remove imports `VoiceConsentFeatureManager`, `VoiceConsentConfig` from `FeatureActivity.kt` (lines 42–43)
 7. Delete `FeatureType.VOICE_CONSENT` branch from `when` in `FeatureActivity.kt` (lines 203–208)
-8. Remove extras `EXTRA_VC_TEXT`, `EXTRA_VC_MAX_SESSION`, `EXTRA_VC_SHOW_INTRO` from `FeatureActivity.kt` companion (lines 58–60)
+8. Remove extras `EXTRA_VC_TEXT`, `EXTRA_VC_MAX_SESSION` from `FeatureActivity.kt` companion (lines 58–59)
 9. Remove `is FeatureConfig.Vc` branch from `when` in `MainActivity.kt`
-10. Remove `libs.au10tix.voice.consent` (line 87) from `app/build.gradle.kts` — **only if VS and ID Thickness are also removed**
+10. Remove `libs.au10tix.voice.consent` (line 96) from `app/build.gradle.kts` — **only if VS and ID Thickness are also removed**
 11. Remove `au10tix-voice-consent` entry from `gradle/libs.versions.toml` — **only if VS and ID Thickness are also removed**
 12. Remove `android.permission.RECORD_AUDIO` from `AndroidManifest.xml` — **only if PFL and VS are also removed**
 
@@ -113,9 +113,9 @@ SDK version: defined in `gradle/libs.versions.toml` → `au10tixSdk` (line 10)
 5. Delete `VsConfigContent()` composable from `ui/screens/FeatureConfigSheet.kt` (lines 673–772)
 6. Remove imports `VideoSessionFeatureManager`, `VideoSessionConfig` from `FeatureActivity.kt` (lines 40–41)
 7. Delete `FeatureType.VIDEO_SESSION` branch from `when` in `FeatureActivity.kt` (lines 209–221)
-8. Remove extras `EXTRA_VS_TEXT`, `EXTRA_VS_VC_TIME`, `EXTRA_VS_ID_TIME`, `EXTRA_VS_ASK_CONSENT`, `EXTRA_VS_SHOW_INTRO` from `FeatureActivity.kt` companion (lines 61–65)
+8. Remove extras `EXTRA_VS_TEXT`, `EXTRA_VS_VC_TIME`, `EXTRA_VS_ID_TIME`, `EXTRA_VS_ASK_CONSENT` from `FeatureActivity.kt` companion (lines 61–64)
 9. Remove `is FeatureConfig.Vs` branch from `when` in `MainActivity.kt`
-10. Remove `libs.au10tix.voice.consent` (line 87) from `app/build.gradle.kts` — **only if VC and ID Thickness are also removed**
+10. Remove `libs.au10tix.voice.consent` (line 96) from `app/build.gradle.kts` — **only if VC and ID Thickness are also removed**
 11. Remove `au10tix-voice-consent` entry from `gradle/libs.versions.toml` — **only if VC and ID Thickness are also removed**
 
 ---
@@ -132,9 +132,9 @@ SDK version: defined in `gradle/libs.versions.toml` → `au10tixSdk` (line 10)
 5. Delete `IdThicknessConfigContent()` composable from `ui/screens/FeatureConfigSheet.kt` (lines 775–907)
 6. Remove imports `IDLivenessFeatureManager`, `IDLivenessConfig` from `FeatureActivity.kt` (lines 38–39)
 7. Delete `FeatureType.ID_THICKNESS` branch from `when` in `FeatureActivity.kt` (lines 222–233)
-8. Remove extras `EXTRA_IDT_BREAK_TIME`, `EXTRA_IDT_FRONT_TIME`, `EXTRA_IDT_ANGLE_TIME`, `EXTRA_IDT_BACK_TIME`, `EXTRA_IDT_ASK_CONSENT`, `EXTRA_IDT_SHOW_INTRO` from `FeatureActivity.kt` companion (lines 66–71)
+8. Remove extras `EXTRA_IDT_BREAK_TIME`, `EXTRA_IDT_FRONT_TIME`, `EXTRA_IDT_ANGLE_TIME`, `EXTRA_IDT_BACK_TIME`, `EXTRA_IDT_ASK_CONSENT` from `FeatureActivity.kt` companion (lines 66–70)
 9. Remove `is FeatureConfig.IdThickness` branch from `when` in `MainActivity.kt`
-10. Remove `libs.au10tix.voice.consent` (line 87) from `app/build.gradle.kts` — **only if VC and VS are also removed**
+10. Remove `libs.au10tix.voice.consent` (line 96) from `app/build.gradle.kts` — **only if VC and VS are also removed**
 11. Remove `au10tix-voice-consent` entry from `gradle/libs.versions.toml` — **only if VC and VS are also removed**
 
 ---
@@ -157,7 +157,7 @@ Note: `FeatureConfig` has no `BackendSend` subclass — Backend Send uses no con
 ## Deletion Rules
 
 **ALWAYS REQUIRED (Never delete):**
-- `libs.au10tix.core` (`app/build.gradle.kts` line 83) — required by all features
+- `libs.au10tix.core` (`app/build.gradle.kts` line 92) — required by all features
 - `sdk/Au10tixSdkManager.kt` — core SDK initialization
 - `AndroidManifest.xml` `INTERNET` permission — required for all network operations
 
@@ -168,11 +168,12 @@ Note: `FeatureConfig` has no `BackendSend` subclass — Backend Send uses no con
 - NFC local AARs (`libs/NFC-release.aar`, `libs/NFC-UI-release.aar`) — required by NFC only
 - `au10tix-voice-consent` — required by VC, VS, ID Thickness
 
-**Shared ML Kit Dependencies (`app/build.gradle.kts` lines 76–79):**
-- `libs.play.services.mlkit.face.detection` (line 76) — required by SDC, PFL
-- `libs.play.services.mlkit.text.recognition` (line 77) — required by SDC only
-- `libs.play.services.tflite.java` (line 78) — required by SDC, PFL
-- `libs.play.services.tflite.support` (line 79) — required by SDC, PFL
+**Shared ML Kit Dependencies (`app/build.gradle.kts` lines 85–89):**
+- `libs.play.services.mlkit.face.detection` (line 85) — required by SDC, PFL
+- `libs.play.services.mlkit.text.recognition` (line 86) — required by SDC only
+- `libs.play.services.tflite.java` (line 87) — required by SDC, PFL
+- `libs.play.services.tflite.support` (line 88) — required by SDC, PFL
+- `libs.play.services.tflite.gpu` (line 89) — required by SDC, PFL
 
 **Shared Permissions (`AndroidManifest.xml`):**
 - `CAMERA` — required by SDC, PFL
@@ -185,4 +186,4 @@ Note: `FeatureConfig` has no `BackendSend` subclass — Backend Send uses no con
 
 **Note on Voice Consent / Video Session / ID Thickness:** All three feature managers (`VoiceConsentFeatureManager`, `VideoSessionFeatureManager`, `IDLivenessFeatureManager`) ship inside the single `voice-consent` artifact (`com.au10tix.sdk:voice-consent`). Remove `au10tix-voice-consent` only when all three are removed.
 
-**Note on NFC:** NFC ships as local AAR files (`libs/NFC-release.aar`, `libs/NFC-UI-release.aar`), not via Maven.
+**Note on NFC:** NFC ships as local AAR files (`libs/NFC-release.aar`, `libs/NFC-UI-release.aar`), not via Maven. The companion libraries `libs.jmrtd`, `libs.scuba.sc.android`, and `libs.spongycastle.prov` (lines 53–55) must also be removed together with the AARs.
