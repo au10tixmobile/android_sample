@@ -19,6 +19,13 @@ playServicesMlkitTextRecognition = "19.0.0"
 playServicesTfliteJava = "16.4.0"
 playServicesTfliteSupport = "16.4.0"
 playServicesTfliteGpu = "16.4.0"
+playServicesBase = "18.5.0"
+lifecycleExtensions = "2.2.0"
+constraintlayout = "2.2.1"
+recyclerview = "1.4.0"
+jmrtd = "0.8.5"
+scuba = "0.0.26"
+spongycastle = "1.58.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -57,6 +64,15 @@ play-services-mlkit-text-recognition = { module = "com.google.android.gms:play-s
 play-services-tflite-java = { module = "com.google.android.gms:play-services-tflite-java", version.ref = "playServicesTfliteJava" }
 play-services-tflite-support = { module = "com.google.android.gms:play-services-tflite-support", version.ref = "playServicesTfliteSupport" }
 play-services-tflite-gpu = { module = "com.google.android.gms:play-services-tflite-gpu", version.ref = "playServicesTfliteGpu" }
+play-services-base = { module = "com.google.android.gms:play-services-base", version.ref = "playServicesBase" }
+# SDK UI companions
+androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version.ref = "lifecycleExtensions" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+# NFC companion libraries
+jmrtd = { module = "org.jmrtd:jmrtd", version.ref = "jmrtd" }
+scuba-sc-android = { module = "net.sf.scuba:scuba-sc-android", version.ref = "scuba" }
+spongycastle-prov = { module = "com.madgag.spongycastle:prov", version.ref = "spongycastle" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -57,18 +57,15 @@ class FeatureActivity : AppCompatActivity() {
         const val EXTRA_NFC_SHOW_INTRO = "extra_nfc_show_intro"
         const val EXTRA_VC_TEXT = "extra_vc_text"
         const val EXTRA_VC_MAX_SESSION = "extra_vc_max_session"
-        const val EXTRA_VC_SHOW_INTRO = "extra_vc_show_intro"
         const val EXTRA_VS_TEXT = "extra_vs_text"
         const val EXTRA_VS_VC_TIME = "extra_vs_vc_time"
         const val EXTRA_VS_ID_TIME = "extra_vs_id_time"
         const val EXTRA_VS_ASK_CONSENT = "extra_vs_ask_consent"
-        const val EXTRA_VS_SHOW_INTRO = "extra_vs_show_intro"
         const val EXTRA_IDT_BREAK_TIME = "extra_idt_break_time"
         const val EXTRA_IDT_FRONT_TIME = "extra_idt_front_time"
         const val EXTRA_IDT_ANGLE_TIME = "extra_idt_angle_time"
         const val EXTRA_IDT_BACK_TIME = "extra_idt_back_time"
         const val EXTRA_IDT_ASK_CONSENT = "extra_idt_ask_consent"
-        const val EXTRA_IDT_SHOW_INTRO = "extra_idt_show_intro"
         const val EXTRA_UI_SHOW_CLOSE = "extra_ui_show_close"
         const val EXTRA_UI_SHOW_PRIMARY = "extra_ui_show_primary"
         const val EXTRA_UI_CAN_UPLOAD = "extra_ui_can_upload"
@@ -204,7 +201,6 @@ class FeatureActivity : AppCompatActivity() {
             val text = intent.getStringExtra(EXTRA_VC_TEXT)
                 ?: "I consent to this identity verification process."
             mgr.setConfig(VoiceConsentConfig(text, intent.getIntExtra(EXTRA_VC_MAX_SESSION, 20)))
-            mgr.isShowIntroScreen = intent.getBooleanExtra(EXTRA_VC_SHOW_INTRO, true)
         }
         FeatureType.VIDEO_SESSION -> VideoSessionFeatureManager(this, this).also { mgr ->
             val text = intent.getStringExtra(EXTRA_VS_TEXT)
@@ -217,7 +213,6 @@ class FeatureActivity : AppCompatActivity() {
                     intent.getBooleanExtra(EXTRA_VS_ASK_CONSENT, false)
                 )
             )
-            mgr.isShowIntroScreen = intent.getBooleanExtra(EXTRA_VS_SHOW_INTRO, true)
         }
         FeatureType.ID_THICKNESS -> IDLivenessFeatureManager(this, this).also { mgr ->
             mgr.setConfig(
@@ -229,7 +224,6 @@ class FeatureActivity : AppCompatActivity() {
                     intent.getBooleanExtra(EXTRA_IDT_ASK_CONSENT, false)
                 )
             )
-            mgr.isShowIntroScreen = intent.getBooleanExtra(EXTRA_IDT_SHOW_INTRO, true)
         }
         FeatureType.SECURE_ME -> null
         FeatureType.BACKEND_SEND -> null
