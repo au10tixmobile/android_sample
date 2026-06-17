@@ -97,7 +97,6 @@ class MainActivity : ComponentActivity() {
                 is FeatureConfig.Vc -> {
                     putExtra(FeatureActivity.EXTRA_VC_TEXT, config.text)
                     putExtra(FeatureActivity.EXTRA_VC_MAX_SESSION, config.maxSessionTime)
-                    putExtra(FeatureActivity.EXTRA_VC_SHOW_INTRO, config.showIntroScreen)
                     putExtra(FeatureActivity.EXTRA_UI_SHOW_CLOSE, config.showCloseButton)
                 }
                 is FeatureConfig.Vs -> {
@@ -105,7 +104,6 @@ class MainActivity : ComponentActivity() {
                     putExtra(FeatureActivity.EXTRA_VS_VC_TIME, config.vcTime)
                     putExtra(FeatureActivity.EXTRA_VS_ID_TIME, config.idTime)
                     putExtra(FeatureActivity.EXTRA_VS_ASK_CONSENT, config.askUserConsent)
-                    putExtra(FeatureActivity.EXTRA_VS_SHOW_INTRO, config.showIntroScreen)
                     putExtra(FeatureActivity.EXTRA_UI_SHOW_CLOSE, config.showCloseButton)
                 }
                 is FeatureConfig.IdThickness -> {
@@ -114,7 +112,6 @@ class MainActivity : ComponentActivity() {
                     putExtra(FeatureActivity.EXTRA_IDT_ANGLE_TIME, config.angleTime)
                     putExtra(FeatureActivity.EXTRA_IDT_BACK_TIME, config.backTime)
                     putExtra(FeatureActivity.EXTRA_IDT_ASK_CONSENT, config.askUserConsent)
-                    putExtra(FeatureActivity.EXTRA_IDT_SHOW_INTRO, config.showIntroScreen)
                     putExtra(FeatureActivity.EXTRA_UI_SHOW_CLOSE, config.showCloseButton)
                 }
             }
