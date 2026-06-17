@@ -21,7 +21,7 @@ Use **Kotlin** for all code examples. Always include imports for classes you ref
 
 ## SDK Facts
 
-- **Current version**: `4.7.0`
+- **Current version**: `4.7.1`
 - **Min SDK**: API 26 (Android 8.0 Oreo)
 - **Host Activity**: Must extend `FragmentActivity` (e.g., `AppCompatActivity`)
 - **Language**: Kotlin (Java interop supported)
@@ -51,7 +51,7 @@ maven {
 In the **app module** `build.gradle.kts`:
 
 ```kotlin
-val au10Version = "4.7.0"
+val au10Version = "4.7.1"
 val cameraxVersion = "1.5.2"
 
 dependencies {
@@ -1096,7 +1096,7 @@ SmartDocumentFeatureManager.getClassification(
 
 ---
 
-## Kotlin Import Reference (verified against SDK 4.7.0)
+## Kotlin Import Reference (verified against SDK 4.7.1)
 
 Use these exact package paths. All others are incorrect guesses.
 

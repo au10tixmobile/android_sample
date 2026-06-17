@@ -602,7 +602,6 @@ private fun NfcConfigContent(onLaunch: (FeatureConfig) -> Unit) {
 private fun VcConfigContent(onLaunch: (FeatureConfig) -> Unit) {
     var text by remember { mutableStateOf("I consent to this identity verification process.") }
     var maxSessionTime by remember { mutableIntStateOf(20) }
-    var showIntroScreen by remember { mutableStateOf(true) }
     var showCloseButton by remember { mutableStateOf(true) }
 
     ConfigSection(title = "Consent Text") {
@@ -652,8 +651,6 @@ private fun VcConfigContent(onLaunch: (FeatureConfig) -> Unit) {
     }
 
     ConfigSection(title = "Options") {
-        ConfigRow(label = "Show Intro Screen", checked = showIntroScreen) { showIntroScreen = it }
-        HorizontalDivider(color = Separator.copy(alpha = 0.3f))
         ConfigRow(label = "Show Close Button", checked = showCloseButton) { showCloseButton = it }
     }
 
@@ -662,7 +659,6 @@ private fun VcConfigContent(onLaunch: (FeatureConfig) -> Unit) {
             FeatureConfig.Vc(
                 text = text,
                 maxSessionTime = maxSessionTime,
-                showIntroScreen = showIntroScreen,
                 showCloseButton = showCloseButton
             )
         )
@@ -675,7 +671,6 @@ private fun VsConfigContent(onLaunch: (FeatureConfig) -> Unit) {
     var vcTime by remember { mutableIntStateOf(7) }
     var idTime by remember { mutableIntStateOf(5) }
     var askUserConsent by remember { mutableStateOf(false) }
-    var showIntroScreen by remember { mutableStateOf(true) }
     var showCloseButton by remember { mutableStateOf(true) }
 
     ConfigSection(title = "Consent Text") {
@@ -752,8 +747,6 @@ private fun VsConfigContent(onLaunch: (FeatureConfig) -> Unit) {
     ConfigSection(title = "Options") {
         ConfigRow(label = "Ask User Consent", checked = askUserConsent) { askUserConsent = it }
         HorizontalDivider(color = Separator.copy(alpha = 0.3f))
-        ConfigRow(label = "Show Intro Screen", checked = showIntroScreen) { showIntroScreen = it }
-        HorizontalDivider(color = Separator.copy(alpha = 0.3f))
         ConfigRow(label = "Show Close Button", checked = showCloseButton) { showCloseButton = it }
     }
 
@@ -764,7 +757,6 @@ private fun VsConfigContent(onLaunch: (FeatureConfig) -> Unit) {
                 vcTime = vcTime,
                 idTime = idTime,
                 askUserConsent = askUserConsent,
-                showIntroScreen = showIntroScreen,
                 showCloseButton = showCloseButton
             )
         )
@@ -778,7 +770,6 @@ private fun IdThicknessConfigContent(onLaunch: (FeatureConfig) -> Unit) {
     var angleTime by remember { mutableIntStateOf(8) }
     var backTime by remember { mutableIntStateOf(8) }
     var askUserConsent by remember { mutableStateOf(false) }
-    var showIntroScreen by remember { mutableStateOf(true) }
     var showCloseButton by remember { mutableStateOf(true) }
 
     ConfigSection(title = "Timing") {
@@ -886,8 +877,6 @@ private fun IdThicknessConfigContent(onLaunch: (FeatureConfig) -> Unit) {
     ConfigSection(title = "Options") {
         ConfigRow(label = "Ask User Consent", checked = askUserConsent) { askUserConsent = it }
         HorizontalDivider(color = Separator.copy(alpha = 0.3f))
-        ConfigRow(label = "Show Intro Screen", checked = showIntroScreen) { showIntroScreen = it }
-        HorizontalDivider(color = Separator.copy(alpha = 0.3f))
         ConfigRow(label = "Show Close Button", checked = showCloseButton) { showCloseButton = it }
     }
 
@@ -899,7 +888,6 @@ private fun IdThicknessConfigContent(onLaunch: (FeatureConfig) -> Unit) {
                 angleTime = angleTime,
                 backTime = backTime,
                 askUserConsent = askUserConsent,
-                showIntroScreen = showIntroScreen,
                 showCloseButton = showCloseButton
             )
         )
